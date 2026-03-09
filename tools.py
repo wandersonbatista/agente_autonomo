@@ -1,9 +1,13 @@
 from langchain.tools import tool
-from duckduckgo_search import DDGS
+from ddgs  import DDGS
 
-@tool
 def search_web(query: str) -> str:
-    """Busca informações na web."""
+    results_text = []
+
     with DDGS() as ddgs:
         results = ddgs.text(query, max_results=3)
-        return str(list(results))
+
+        for r in results:
+            results_text.append(r["body"])
+
+    return "\n".join(results_text)

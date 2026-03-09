@@ -1,11 +1,13 @@
-from graph import app
+from tools import search_web
+from agent import run_agent
 
 while True:
-    user_input = input("\nVocê: ")
+    question = input("\nVocê: ")
 
-    if user_input.lower() == "sair":
+    if question.lower() in ["sair", "exit"]:
         break
 
-    result = app.invoke({"input": user_input})
+    context = search_web(question)
+    answer = run_agent(question, context)
 
-    print("\nAgente:", result["final_answer"])
+    print(f"\nAgente: {answer}")
